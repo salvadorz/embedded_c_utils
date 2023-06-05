@@ -1,0 +1,422 @@
+---
+# BasedOnStyle:  LLVM
+Language:        Cpp
+Standard:        c++03
+
+AlignConsecutiveMacros: Consecutive                                  # Change from None
+IndentWidth:     2
+ColumnLimit:     110                                                 # Change from 80
+ContinuationIndentWidth: 4
+BinPackParameters: true
+SortIncludes:    CaseSensitive
+
+# The extra indent or outdent of access modifiers, e.g. public:
+AccessModifierOffset: -2
+# Aligns arguments after an open bracket. [Align, DontAlign AlwaysBreak]
+AlignAfterOpenBracket:  Align
+# Align array column and right justify the columns
+AlignArrayOfStructures: None
+# Align the C/C++ preprocessor macros of consecutive lines.
+# [None - Consecutive - AcrossEmptyLines - AcrossComments - AcrossEmptyLinesAndComments]
+#AlignConsecutiveMacros: Consecutive                                  # Change from None
+# Align the assignment operators of consecutive lines
+AlignConsecutiveAssignments:  Consecutive
+# Do not align the colons of consecutive bitfields
+AlignConsecutiveBitFields:    Consecutive 
+# Do not align the variable names of consecutive declarations
+AlignConsecutiveDeclarations: Consecutive 
+# Aligning backslashes in escaped newlines. [DontAlign, Right, Left]
+AlignEscapedNewlines: Left                                           # Change from Right
+# Align operands of binary and ternary expressions.
+AlignOperands:   Align
+# Aligns consecutive trailing comments
+AlignTrailingComments: true
+# if doesn't fit on a line, allow putting all arguments onto the next line, even if 
+# `BinPackArguments` is false.
+AllowAllArgumentsOnNextLine: true
+# if doesn't fit on a single line, allow putting all member initializers onto the next line,
+# if `ConstructorInitializerAllOnOneLineOrOnePerLine` is true. Note that this parameter 
+# has no effect if "ConstructorInitializerAllOnOneLineOrOnePerLine" is false.
+AllowAllConstructorInitializersOnNextLine: true
+# if doesn't fit on a line, allow putting all parameters of a function declaration onto
+# the next line even if "BinPackParameters" is false.
+AllowAllParametersOfDeclarationOnNextLine: true
+# Short enums are not contracted into a single line
+AllowShortEnumsOnASingleLine: true
+# Allows contracting simple braced statements to a single line. (e.g. if (a) { return; } )
+AllowShortBlocksOnASingleLine: Never
+# short case labels will be contracted to a single line. (e.g. case 1: x = 1; break; )
+AllowShortCaseLabelsOnASingleLine: false
+# Dependent on the value, int f() { return 0; } can be put on a single line. 
+# [InlineOnly Empty Inline All]
+# InlineOnly: merge functions defined inside a class.
+#             class Foo { \    void f() { foo(); } \};
+# Empty     : Only merges empty functions. "void f() {}"
+# Inline    : Only merge functions defined inside a class. Implies "empty".
+# All       : Merge all functions fitting on a single line.
+AllowShortFunctionsOnASingleLine: Empty                              # Change from All
+# Dependent on the value, "auto lambda []() { return 0; }" 
+# can be put on a single line. [None, Empty, InLine, All]
+# Empty : Only merge empty lambdas. auto lambda = [](int a) {}
+# Inline: Merge lambda into a single line if argument of a function. 
+#         sort(a.begin(), a.end(), ()[] { return x < y; })
+# All   : Merge all lambdas fitting on a single line.
+AllowShortLambdasOnASingleLine: Inline                               # Change from All
+# If true, "if (a) return;" can be put on a single line.
+# [ Never, WithoutElse, Always ]
+# WithoutElse: only if the else is not a compound statement.
+AllowShortIfStatementsOnASingleLine: WithoutElse                     # Change from Never
+# If true, "while (true) continue;" can be put on a single line.
+AllowShortLoopsOnASingleLine: false
+# DEPRECATED and is retained for backwards compatibility.
+AlwaysBreakAfterDefinitionReturnType: None
+# Function declaration return type breaking style to use.
+# [ None, All, TopLevel, AllDefinitions, TopLevelDefinitions]
+AlwaysBreakAfterReturnType: None
+# If true, always break before multiline string literals.
+# aaaa = \ [tab]"bbbb"\[tab]"cccc";
+AlwaysBreakBeforeMultilineStrings: false
+# The template declaration breaking style to use. [No, MultiLine, Yes]
+AlwaysBreakTemplateDeclarations: MultiLine
+# Language extensions or static analyzer annotations
+AttributeMacros: # ['__capability', '__unused']
+  - __capability
+# If false, a function call's arguments will either be
+# all on the same line or will have one line each.
+BinPackArguments: true
+# If false, a function declaration's/definition's parameters will either
+# all be on the same line or will have one line each.
+#BinPackParameters: true
+# brace breaking style to use.
+# [Attach, Linux, Mozilla, Stroustrup, Allman, GNU, Webkit, Custom]
+BreakBeforeBraces: Custom                                            #Change from Attach
+BraceWrapping:
+  # In switch for cases  case 1: { 
+  AfterCaseLabel:  false
+  # Class brace opens on the same line as the class name
+  AfterClass:      false
+  # Wrap control statements (if/for/while/switch/..)
+  AfterControlStatement: Never
+  # Wrap enum definitions.
+  AfterEnum:        false
+  AfterFunction:    false
+  AfterNamespace:   false
+  AfterObjCDeclaration: false
+  AfterStruct:      false
+  AfterUnion:       false
+  AfterExternBlock: false
+  # } catch () { }
+  BeforeCatch:      false
+  # } else {\}
+  BeforeElse:       false
+  BeforeLambdaBody: false
+  BeforeWhile:      false
+  # Indent the wrapped braces themselves.
+  IndentBraces:     false
+  # If false, empty function body can be put on a single line.
+  SplitEmptyFunction:  false                                         # Change from true
+  # If false, empty record (e.g. class, struct or union) body
+  # can be put on a single line.
+  SplitEmptyRecord:    false                                         # Change from true
+  SplitEmptyNamespace: true
+# For splitting long binary operations, None: break after the operator
+# [NonAssignment, All, None]
+BreakBeforeBinaryOperators: None
+# Place concept declaration on a new line
+BreakBeforeConceptDeclarations: true
+BreakBeforeInheritanceComma: false
+# [BeforeColon, BeforeComma, AfterColon]
+# class Foo     class Foo     class Foo:
+#       : Base1,      : Base1      Base1,
+#         Base2       , Base2      Base2
+BreakInheritanceList: BeforeColon
+# If true, ternary operators will be placed after line breaks.
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializersBeforeComma: false
+# [BeforeColon, BeforeComma, AfterColon]
+# Constructor() Constructor() Constructor() :
+#     : init1(),    : init1()     : init1(),
+#       init2()     , init2()       init2()
+BreakConstructorInitializers: BeforeColon
+BreakAfterJavaFieldAnnotations: false
+# Allow breaking string literals when formatting.
+BreakStringLiterals: true
+#ColumnLimit:     100                                                 # Change from 80
+CommentPragmas:  '^ IWYU pragma:'
+# If true, consecutive namespace declarations will be on the same line.
+# If false, each namespace is declared on a new line.
+CompactNamespaces: false
+# If the constructor initializers don't fit on a line, put each initializer on its own line.
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+# The number of characters to use for indentation of 
+# constructor initializer lists as well as inheritance lists.
+ConstructorInitializerIndentWidth: 4
+# Indent width for line continuations.
+#ContinuationIndentWidth: 4
+# If true, format braced lists as best suited for C++11 braced lists.
+# true:                                  false:
+# vector<int> x{1, 2, 3, 4};     vs.     vector<int> x{ 1, 2, 3, 4 };
+# vector<T> x{{}, {}, {}, {}};           vector<T> x{ {}, {}, {}, {} };
+# f(MyMap[{composite, key}]);            f(MyMap[{ composite, key }]);
+# new int[3]{1, 2, 3};                   new int[3]{ 1, 2, 3 };
+Cpp11BracedListStyle: false                                          # Change from true
+# Analyze the formatted file for the most used line ending (\r\n or \n).
+# UseCRLF is only used as a fallback if none can be derived.
+DeriveLineEnding: true
+# If true, analyze the formatted file for the most common alignment of & and *.
+# Pointer and reference alignment styles are going to be updated according to
+# the preferences found in the file.
+DerivePointerAlignment: false
+# Disables formatting completely. Also can be used // clang-format off/on
+DisableFormat:   false
+# Remove all empty lines after access modifiers
+EmptyLineAfterAccessModifier: Never
+# Add empty line only when access modifier starts a new logical block.
+# Logical block is a group of one or more member fields or functions.
+EmptyLineBeforeAccessModifier: LogicalBlock
+# If true, clang-format detects whether function calls and definitions are 
+# formatted with one parameter per line. Each call can be bin-packed,
+# one-per-line or inconclusive. If it is inconclusive, e.g. completely on one line,
+# but a decision needs to be made, clang-format analyzes whether there are other
+# bin-packed cases in the input file and act accordingly.
+# NOTE: This is an experimental flag, that might go away or be renamed.
+ExperimentalAutoDetectBinPacking: false
+# Add missing namespace end comments for short namespaces and fixes invalid existing ones.
+#   true:                      false:
+#   namespace a {      vs.     namespace a {
+#   foo();                     foo();
+#   } // namespace a           }
+FixNamespaceComments: true
+# A vector of macros that should be interpreted as foreach loops instead of as function calls.
+# These are expected to be macros of the form:
+#    Q_FOREACH(<variable-declaration>, ...)
+ForEachMacros:
+  - foreach
+  - Q_FOREACH
+  - BOOST_FOREACH
+IfMacros:
+  - KJ_IF_MAYBE
+# Multiple #include blocks can be sorted as one and divided based on category.
+# Preserve: Sort each #include block separately.
+# Merge   : Merge multiple #include blocks together and sort as one.
+# Regroup : Merge multiple #include blocks together and sort as one. 
+#           Then split into groups based on category priority.
+IncludeBlocks:   Preserve
+# Regular expressions denoting the different #include categories used for ordering #includes.
+IncludeCategories:
+  - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
+    Priority:        2
+    SortPriority:    0
+    CaseSensitive:   false
+  - Regex:           '^(<|"(gtest|gmock|isl|json)/)'
+    Priority:        3
+    SortPriority:    0
+    CaseSensitive:   false
+  - Regex:           '.*'
+    Priority:        1
+    SortPriority:    0
+    CaseSensitive:   false
+# Specify a regular expression of suffixes that are allowed in the file-to-main-include mapping.
+# When guessing whether a #include is the "main" include (to assign category 0, see above), 
+# use this regex of allowed suffixes to the header stem. A partial match is done, so that:
+#   "" means "arbitrary suffix"
+#  "$" means "no suffix"
+# e.g. if configured to "(_test)?$", then a header a.h would be seen as 
+#      the "main" include in both a.cc and a_test.cc.
+IncludeIsMainRegex: '(Test)?$'
+# Specify a regular expression for files being formatted that are allowed to be considered
+# “main” in the file-to-main-include mapping.
+IncludeIsMainSourceRegex: ''
+# access modifiers are indented (or outdented) relative to the record members,
+# respecting the AccessModifierOffset
+IndentAccessModifiers: false
+# Indent case labels one level from the switch statement.
+#     false:                       true:
+#     switch (fool) {      vs.     switch (fool) {
+#     case 1:                        case 1:
+#       bar();                         bar();
+#       break;                         break;
+#     default:                       default:
+#       plop();                        plop();
+#     }                            }
+IndentCaseLabels: false
+# Do not indent case blocks one level from case label
+IndentCaseBlocks: false
+# Goto labels are indented to proper level
+IndentGotoLabels: true
+# [ None,          AfterHash,          BeforeHash]
+#  #if FOO         #if FOO             #if FOO
+#  #if BAR         #  if BAR             #if BAR
+#  #include <foo>  #    include <foo>      #include <foo>
+#  #endif          #  endif              #endif
+#  #endif          #endif              #endif
+IndentPPDirectives: BeforeHash                                       # Change from None
+IndentExternBlock:  AfterExternBlock
+# Indent requires clause in a template
+IndentRequires:  false
+# The number of columns to use for indentation.
+#IndentWidth:     2
+# Indent if a function definition or declaration is wrapped after the type.
+IndentWrappedFunctionNames: false
+InsertTrailingCommas: None
+JavaScriptQuotes: Leave
+JavaScriptWrapImports: true
+# If true the empty line at the start of blocks is kept.
+#  true:                   false:
+#  if (foo) {      vs.     if (foo) {
+#                            bar();
+#    bar();                }
+#  }
+KeepEmptyLinesAtTheStartOfBlocks: true
+LambdaBodyIndentation: Signature
+# A regular expression matching macros that start a block.
+#     # With:                                      NS_MAP_BEGIN
+#     MacroBlockBegin: "^NS_MAP_BEGIN|\              foo();
+#     NS_TABLE_HEAD$"                   will       NS_MAP_END
+#     MacroBlockEnd: "^\                look       NS_TABLE_HEAD
+#     NS_MAP_END|\                                   bar();
+#     NS_TABLE_.*_END$"                            NS_TABLE_FOO_END
+MacroBlockBegin: ''
+MacroBlockEnd:   ''
+# The maximum number of consecutive empty lines to keep.
+MaxEmptyLinesToKeep: 1
+# The indentation used for namespaces. [None, Inner, All]
+#   namespace out {   namespace out {   namespace out {
+#   int i;            int i;              int i;
+#   namespace in {    namespace in {      namespace in {
+#   int i;              int i;              int i;
+#   }                 }                   }
+#   }                 }                 }
+NamespaceIndentation: Inner                                          # Change from None
+ObjCBinPackProtocolList: Auto
+ObjCBlockIndentWidth: 2
+ObjCBreakBeforeNestedBlockParam: true
+ObjCSpaceAfterProperty: false
+ObjCSpaceBeforeProtocolList: true
+# The penalty for breaking around an assignment operator.
+PenaltyBreakAssignment: 2
+# The penalty for breaking a function call after call(.
+PenaltyBreakBeforeFirstCallParameter: 19
+# The penalty for each line break introduced inside a comment.
+PenaltyBreakComment: 300
+# The penalty for breaking before the first <<.
+PenaltyBreakFirstLessLess: 120
+# The penalty for each line break introduced inside a string literal.
+PenaltyBreakString: 1000
+# The penalty for breaking after template declaration.
+PenaltyBreakTemplateDeclaration: 10
+PenaltyExcessCharacter: 1000000
+PenaltyReturnTypeOnItsOwnLine: 60
+PenaltyIndentedWhitespace: 0
+# Pointer and reference alignment style.
+# [Left,   Right,   Middle]
+# int* a;  int *a;  int * a;
+PointerAlignment: Right
+PPIndentWidth:   -1
+ReferenceAlignment: Pointer
+ReflowComments:  true
+ShortNamespaceLines: 1
+# If true, clang-format will sort #includes.
+#SortIncludes:    CaseSensitive
+SortJavaStaticImport: Before
+# If true, clang-format will sort using declarations.
+SortUsingDeclarations: true
+#   true:              false:
+#   (int) i;    vs.    (int)i;
+SpaceAfterCStyleCast: false
+#  true:                        false:
+#  ! someExpression();    vs.   !someExpression();
+SpaceAfterLogicalNot: false
+#  true:                             false:
+#  template <int> void foo();  vs.   template<int> void foo();
+SpaceAfterTemplateKeyword: true
+#  true:                false:
+#  int a = 5;    vs.    int a=5;
+#  a += 42              a+=42;
+SpaceBeforeAssignmentOperators: true
+# Do not place a space before a case statement colon
+SpaceBeforeCaseColon: false
+#  true:                             false:
+#  Foo foo { bar };            vs.   Foo foo{ bar };
+#  Foo {};                           Foo{};
+#  vector<int> { 1, 2, 3 };          vector<int>{ 1, 2, 3 };
+#  new int[3] { 1, 2, 3 };           new int[3]{ 1, 2, 3 };
+SpaceBeforeCpp11BracedList: false
+# If false, spaces will be removed before constructor initializer colon.
+#  true:                             false:
+#  Foo::Foo() : a(a) {}              Foo::Foo(): a(a) {}
+SpaceBeforeCtorInitializerColon: true
+# If false, spaces will be removed before inheritance colon.
+#  true:                             false:
+#  class Foo : Bar {}        vs.     class Foo: Bar {}
+SpaceBeforeInheritanceColon: true
+# [ Never,     ControlStatements, NonEmptyParentheses, Always]
+#  void f() {     void f() {      void f() {         void f () {
+#    if(true) {     if (true) {     if (true) {        if (true) {
+#      f();           f();            g (x, y, z);       f ();
+#    }              }               }                  }
+#  }              }               }                  }
+SpaceBeforeParens: ControlStatements
+# Don't ensure spaces around pointer qualifiers, use PointerAlignment instead
+SpaceAroundPointerQualifiers: Default
+#     true:                                  false:
+#     for (auto v : values) {}       vs.     for(auto v: values) {}
+SpaceBeforeRangeBasedForLoopColon: true
+# If true put a space in an empty block
+SpaceInEmptyBlock: false
+#  true:                               false:
+#  void f( ) {                    vs.  void f() {
+#    int x[] = {foo( ), bar( )};         int x[] = {foo(), bar()};
+#    if (true) {                         if (true) {
+#      f( );                               f();
+#    }                                   }
+#  }                                   }
+SpaceInEmptyParentheses: false
+# Spaces between end of the code and the start of a // line comment
+# This does not affect trailing block comments /* Block comment
+SpacesBeforeTrailingComments: 1
+# Remove spaces within <> : <int>
+# std::function< void(int) > fct;        std::function<void(int)> fct;
+SpacesInAngles:  Never
+# Do not add spaces around if/for/while/switch conditions
+SpacesInConditionalStatement: false
+# Do not insert spaces inside container literals
+SpacesInContainerLiterals: true
+#  true:                   false:
+#  x = ( int32 )y    vs.   x = (int32)y
+SpacesInCStyleCastParentheses: false
+SpacesInLineCommentPrefix:
+  Minimum:         1
+  Maximum:        -1
+#  true:                                false:
+#  t f( Deleted & ) & = delete;   vs.   t f(Deleted &) & = delete;
+SpacesInParentheses:       false
+#  true:                                  false:
+#  int a[ 5 ];                    vs.     int a[5];
+#  std::unique_ptr<int[]> foo() {} // Won't be affected
+SpacesInSquareBrackets:    false
+# Do not place a space before square brackets []
+SpaceBeforeSquareBrackets: false
+BitFieldColonSpacing: Both
+StatementAttributeLikeMacros:
+  - Q_EMIT
+# A vector of macros that should be interpreted as complete statements.
+# Typical macros are expressions, and require a semi-colon to be added;
+# sometimes this is not the case, and this allows to make clang-format aware.
+StatementMacros:
+  - Q_UNUSED
+  - QT_REQUIRE_VERSION
+# The number of columns used for tab stops.
+TabWidth:        8
+# use \n for line breaks
+UseCRLF:         false
+# The way to use tab characters in the resulting file.
+# [ Never, ForIndentation, ForContinuationAndIndentation, Always]
+UseTab:          Never
+# A vector of macros which are whitespace-sensitive and should not be touched.
+WhitespaceSensitiveMacros:
+  - STRINGIZE
+  - PP_STRINGIZE
+  - BOOST_PP_STRINGIZE
+  - NS_SWIFT_NAME
+  - CF_SWIFT_NAME
