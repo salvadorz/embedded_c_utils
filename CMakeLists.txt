@@ -16,5 +16,10 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
+### General Project Structure ###
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/lib/)
+
 ### Project Source Tree ###
 add_subdirectory("src")
