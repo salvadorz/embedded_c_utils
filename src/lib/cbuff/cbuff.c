@@ -50,6 +50,7 @@ base_t cbuff_init(cbuff_handle_t cb, void *const buffer, uint16_t const length, 
     void    **buff_ref = (void **)&cb->vBuff;
     uint8_t  *elem_sz  = (uint8_t *)&cb->u8_eSize;
     uint16_t *buff_len = (uint16_t *)&cb->u16_lght;
+
     // assignation of the members through pointers
     *buff_ref = buffer;
     *buff_len = length;
@@ -78,10 +79,14 @@ base_t cbuff_push(cbuff_handle_t cb, void *const element, bool_t const forced) {
     uint16_t head_cnt = cb->u16_head;
     char    *head_pt  = cb->vBuff + (head_cnt * cb->u8_eSize); // cb->vBuff[cb->u16_head] point to the head
     memcpy(head_pt, element, cb->u8_eSize);
+
     // move ahead the head idx, if reach max then it's value is 0
     cb->u16_head = (++head_cnt == cb->u16_lght) ? 0U : head_cnt;
 
-    if (forced && cb->b_isFull) cb->u16_tail = (++cb->u16_tail == cb->u16_lght) ? 0U : cb->u16_tail;
+    if (forced && cb->b_isFull) { // if forced and full also move ahead the tail
+      cb->u16_tail = (++cb->u16_tail == cb->u16_lght) ? 0U : cb->u16_tail;
+    }
+    // update the full flag
     if (cb->u16_head == cb->u16_tail) cb->b_isFull = true;
   } else {
     ret_val = NOT_OK;
@@ -115,10 +120,12 @@ uint16_t cbuff_size(cbuff_handle_t cb) {
 
   if (NULL != cb) {
     int32_t elements = cb->u16_head - cb->u16_tail;
+
     if (0 > elements)
       elements += cb->u16_lght;
     else if ((0 == elements) && (cb->b_isFull))
       elements += cb->u16_lght;
+
     ret_val = (uint16_t)elements;
   }
 
