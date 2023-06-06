@@ -69,7 +69,7 @@
  *   0 - Success
  *   1 - Out of space
  */
-#define CBUFF_PUSH(buff, elem) buff##_push_refd(elem)
+#define CBUFF_PUT(buff, elem) buff##_push_refd(elem)
 
 /**
  * Description:
@@ -80,7 +80,7 @@
  *   0 - Success
  *   1 - Out of space
  */
-#define CBUFF_FPUSH(buff, elem) buff##_push_ovwr(elem)
+#define CBUFF_PUSH(buff, elem) buff##_push_ovwr(elem)
 
 /**
  * Description:
