@@ -110,7 +110,10 @@ uint16_t cbuff_size(cbuff_handle_t cb) {
 
   if (NULL != cb) {
     int32_t elements = cb->u16_head - cb->u16_tail;
-    if (0 > elements) elements += cb->u16_lght;
+    if (0 > elements)
+      elements += cb->u16_lght;
+    else if ((0 == elements) && (cb->b_isFull))
+      elements += cb->u16_lght;
     ret_val = (uint16_t)elements;
   }
 
