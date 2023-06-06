@@ -37,8 +37,6 @@
 static bool bfn_is_cbuff_empty(cbuff_handle_t cb) {
   bool ret_val = false;
 
-  // assert(cb);
-
   if ((cb->u16_head == cb->u16_tail) && !(cb->b_isFull)) {
     ret_val = true;
   }
@@ -49,10 +47,14 @@ base_t cbuff_init(cbuff_handle_t cb, void *const buffer, uint16_t const length, 
   base_t ret_val = NOT_OK;
 
   if ((NULL != cb) && (NULL != buffer) && (length) && (element_sz)) {
-    cb->vBuff    = buffer;
-    cb->u16_lght = length;
-    cb->u8_eSize = element_sz;
-    ret_val      = cbuff_reset(cb);
+    void    **buff_ref = (void **)&cb->vBuff;
+    uint8_t  *elem_sz  = (uint8_t *)&cb->u8_eSize;
+    uint16_t *buff_len = (uint16_t *)&cb->u16_lght;
+    // assignation of the members through pointers
+    *buff_ref = buffer;
+    *buff_len = length;
+    *elem_sz  = element_sz;
+    ret_val   = cbuff_reset(cb);
   }
   return ret_val;
 }
