@@ -35,6 +35,84 @@
 
 // Includes
 #include "cbuff/cbuff_datatypes.h"
+#include "cbuff/cbuff_defines.h"
+
+/**
+ * Description:
+ *   Defines a global circular buffer `buff` of a given type and length (size).
+ *    The type can be native data types or user-defined data types.
+ *
+ * Usage:
+ *   CBUFF_CREATE(uint8_t, byte_buf, 15);
+ *   CBUFF_CREATE(struct foo, foo_buf, 10);
+ */
+#define CBUFF_CREATE(type, buff, length) _CBUFF_DEF_TYPE(type, buff, length)
+
+/**
+ * Description:
+ *   Resets the Circular buffer, putting it in a known (default) state.
+ *   Note: Does not clean the freed slots.
+ */
+#define CBUFF_FLUSH(buff) \
+  do {                 \
+    buff.b_isFull = 0; \
+    buff.u16_head = 0; \
+    buff.u16_tail = 0; \
+  } while (0)
+
+/**
+ * Description:
+ *   Inserts the element pointed to by `elem` at the head of the circular buffer `buff`.
+ *   After the write, the occupancy count increases by one.
+ *
+ * Returns (base_t):
+ *   0 - Success
+ *   1 - Out of space
+ */
+#define CBUFF_PUSH(buff, elem) buff##_push_refd(elem)
+
+/**
+ * Description:
+ *   Inserts (forced) the element pointed to by `elem` at the head of the circular buffer `buff`.
+ *   If the buffer is full the oldest data is overwritten and the count is not increased otherwise increases.
+ *
+ * Returns (base_t):
+ *   0 - Success
+ *   1 - Out of space
+ */
+#define CBUFF_FPUSH(buff, elem) buff##_push_ovwr(elem)
+
+/**
+ * Description:
+ *   Copies the element at the tail of the circular buffer `buff` into the location pointed
+ *   to by `elem`. This method is read-only and does not affects the occupancy status.
+ *
+ * Returns (base_t):
+ *   0 - Success
+ *   1 - Empty
+ */
+#define CBUFF_GET(buff, elem) buff##_get_refd(elem)
+
+/**
+ * Description:
+ *   Removes the element at the tail of the circular buffer `buff` and makes it
+ *   available at `elem`. This is a read-write method, and the occupancy count reduces
+ *   by one.
+ *
+ * Returns (base_t):
+ *   0 - Success
+ *   1 - Empty
+ */
+#define CBUFF_POP(buff, elem) buff##_pop_refd(elem)
+
+/**
+ * Description:
+ *   Returns the number of free slots in the circular buffer `buff`.
+ *
+ * Returns (int):
+ *   0..N - Number of slots available.
+ */
+#define CBUFF_FREE_SPACES(buff) (buff.u16_lght - cbuff_size(&buff))
 
 typedef cbuff_t *cbuff_handle_t;
 
