@@ -69,16 +69,17 @@ base_t cbuff_reset(cbuff_handle_t cb) {
   return ret_val;
 }
 
-base_t cbuff_push(cbuff_handle_t cb, void *const element) {
+base_t cbuff_push(cbuff_handle_t cb, void *const element, bool_t const forced) {
   base_t ret_val = OK;
 
-  if ((NULL != cb) && (NULL != element) && !(cb->b_isFull)) {
+  if ((NULL != cb) && (NULL != element) && (forced || !(cb->b_isFull))) {
     uint16_t head_cnt = cb->u16_head;
     char    *head_pt  = cb->vBuff + (head_cnt * cb->u8_eSize); // cb->vBuff[cb->u16_head] point to the head
     memcpy(head_pt, element, cb->u8_eSize);
     // move ahead the head idx, if reach max then it's value is 0
     cb->u16_head = (++head_cnt == cb->u16_lght) ? 0U : head_cnt;
 
+    if (forced && cb->b_isFull) cb->u16_tail = (++cb->u16_tail == cb->u16_lght) ? 0U : cb->u16_tail;
     if (cb->u16_head == cb->u16_tail) cb->b_isFull = true;
   } else {
     ret_val = NOT_OK;
@@ -87,17 +88,19 @@ base_t cbuff_push(cbuff_handle_t cb, void *const element) {
   return ret_val;
 }
 
-base_t cbuff_pop(cbuff_handle_t cb, void *element) {
+base_t cbuff_pop(cbuff_handle_t cb, void *element, bool_t const rd_only) {
   base_t ret_val = OK;
 
   if ((NULL != cb) && !(bfn_is_cbuff_empty(cb))) {
     uint16_t tail_cnt = cb->u16_tail;
     char    *tail_pt  = cb->vBuff + (tail_cnt * cb->u8_eSize);
     memcpy(element, tail_pt, cb->u8_eSize);
-    // move ahead the tail idx, if reach max then it's value is 0
-    cb->u16_tail = (++tail_cnt == cb->u16_lght) ? 0U : tail_cnt;
 
-    if (cb->b_isFull) cb->b_isFull = false;
+    if (!rd_only) {
+      // move ahead the tail idx, if reach max then it's value is 0
+      cb->u16_tail = (++tail_cnt == cb->u16_lght) ? 0U : tail_cnt;
+      if (cb->b_isFull) cb->b_isFull = false;
+    }
   } else {
     ret_val = NOT_OK;
   }
