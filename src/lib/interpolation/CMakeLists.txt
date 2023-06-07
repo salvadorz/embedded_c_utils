@@ -4,7 +4,7 @@
 #*****************************************************************************/
 #*
 #*@author Salvador Z
-#*@brief CMakeLists file to add subscribe lib directories
+#*@brief CMakeLists file to add Interpolation estimation lib
 #*
-add_subdirectory(cbuff) # Circular/ring buffer
-add_subdirectory(interpolation) # Interpolate a linear function estimation
+add_library(interpolate STATIC interpolate.c)
+target_link_libraries(interpolate)
