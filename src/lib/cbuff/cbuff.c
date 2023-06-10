@@ -118,12 +118,10 @@ base_t cbuff_pop(cbuff_handle_t cb, void *element, bool_t const rd_only) {
 uint16_t cbuff_size(cbuff_handle_t cb) {
   uint16_t ret_val = 0U;
 
-  if (NULL != cb) {
+  if ((NULL != cb) && !(bfn_is_cbuff_empty(cb))) {
     int32_t elements = cb->u16_head - cb->u16_tail;
 
     if (0 > elements)
-      elements += cb->u16_lght;
-    else if ((0 == elements) && (cb->b_isFull))
       elements += cb->u16_lght;
 
     ret_val = (uint16_t)elements;
