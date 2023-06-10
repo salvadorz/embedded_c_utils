@@ -4,8 +4,7 @@
 #*****************************************************************************/
 #*
 #*@author Salvador Z
-#*@brief CMakeLists file to add subscribe lib directories
+#*@brief CMakeLists file to add Queue Class library
 #*
-add_subdirectory(cbuff) # Circular/ring buffer
-add_subdirectory(interpolation) # Interpolate a linear function estimation
-add_subdirectory(queue) # Queue class a FIFO class structure in CPP
+add_library(queue STATIC queue.cpp)
+target_link_libraries(queue)
