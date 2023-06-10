@@ -34,19 +34,16 @@
 
 namespace c_utils {
 
-template <class T> class Queue {
+template <class T, uint16_t max_size> class Queue {
 private:
-  T             *_buff;
-  bool           _full = false;
-  uint16_t       _head = 0;
-  uint16_t       _tail = 0;
-  uint16_t const max;
+  T        _buff[max_size];
+  bool     _full = false;
+  uint16_t _head = 0;
+  uint16_t _tail = 0;
 
 public:
-  explicit Queue(uint16_t size) : _buff(new T[size]), max(size) {}
-  ~Queue() {
-    delete[] _buff;
-  }
+  explicit Queue() = default;
+  ~Queue() {}
 
   bool empty() const {
     return ((_tail == _head) && !_full);
@@ -55,7 +52,7 @@ public:
   uint16_t size() const {
     uint16_t size = 0;
     if (!empty()) {
-      size = (0 > _head - _tail) ? max + (_head - _tail) : _head - _tail;
+      size = (0 > _head - _tail) ? max_size + (_head - _tail) : _head - _tail;
     }
     return size;
   }
@@ -63,8 +60,8 @@ public:
   // Inserts a new(est) element after its current last element, increases the container size by one.
   void push(T val) {
     _buff[_head] = val;
-    _head       = (++_head) == max ? 0 : _head;
-    if (_full) _tail = (++_tail) == max ? 0 : _tail;
+    _head        = (++_head) == max_size ? 0 : _head;
+    if (_full) _tail = (++_tail) == max_size ? 0 : _tail;
     if (_tail == _head) _full = true;
   }
 
@@ -72,7 +69,7 @@ public:
   bool pop() {
     bool is_ok = false;
     if (!empty()) {
-      _tail = (++_tail) == max ? 0 : _tail;
+      _tail = (++_tail) == max_size ? 0 : _tail;
       is_ok = true;
     }
     return is_ok;
@@ -83,7 +80,7 @@ public:
     bool is_ok = false;
     if (!_full) {
       _buff[_head] = val;
-      _head       = (++_head) == max ? 0 : _head;
+      _head        = (++_head) == max_size ? 0 : _head;
 
       if (_tail == _head) _full = true;
       is_ok = true;
@@ -97,7 +94,7 @@ public:
     bool is_ok = false;
     if (!empty()) {
       element = _buff[_tail];
-      _tail   = (++_tail) == max ? 0 : _tail;
+      _tail   = (++_tail) == max_size ? 0 : _tail;
       _full   = false;
       is_ok   = true;
     }
@@ -108,10 +105,10 @@ public:
     if (empty()) return T();
 
     T element = _buff[_tail];
-    _tail     = (++_tail) == max ? 0 : _tail;
+    _tail     = (++_tail) == max_size ? 0 : _tail;
     _full     = false;
 
     return element;
   }
 };
-} // namespace
+} // namespace c_utils
