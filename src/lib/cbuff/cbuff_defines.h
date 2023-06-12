@@ -17,7 +17,7 @@
     .vBuff = buff ## cbuff,             \
     .u8_eSize = sizeof(type),           \
     .b_isFull = false,                  \
-    .u16_lght = size,                   \
+    .u16_lgth = size,                   \
     .u16_head = 0U,                     \
     .u16_tail = 0U,                     \
   };

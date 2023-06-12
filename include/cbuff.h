@@ -112,7 +112,7 @@
  * Returns (int):
  *   0..N - Number of slots available.
  */
-#define CBUFF_FREE_SPACES(buff) (buff.u16_lght - cbuff_size(&buff))
+#define CBUFF_FREE_SPACES(buff) (buff.u16_lgth - cbuff_size(&buff))
 
 typedef cbuff_t *cbuff_handle_t;
 
