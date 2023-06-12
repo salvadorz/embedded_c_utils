@@ -54,10 +54,9 @@
  *   Note: Does not clean the freed slots.
  */
 #define CBUFF_FLUSH(buff) \
-  do {                 \
-    buff.b_isFull = 0; \
-    buff.u16_head = 0; \
-    buff.u16_tail = 0; \
+  do {                    \
+    buff.u16_head = 0;    \
+    buff.u16_tail = 0;    \
   } while (0)
 
 /**

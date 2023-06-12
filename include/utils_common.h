@@ -117,8 +117,23 @@ typedef uint8_t base_t;
   #define CLEAR (0U)
 #endif
 
+#ifndef DISABLE
+  #define DISABLE (0U)
+#endif
+
+#ifndef ENABLE
+  #define ENABLE (1U)
+#endif
+
 #ifndef NULL
   #define NULL ((void *)0)
 #endif
 
+#ifndef _UNUSED
+  #define _UNUSED(x) ((void)(x))
+#endif
+
+#ifndef ASSERT
+  #define ASSERT(expr) assert(expr)
+#endif
 #endif /* UTILS_COMMON_H_ */

@@ -9,17 +9,25 @@
 #ifndef CBUFF_DEFINES_H_
 #define CBUFF_DEFINES_H_
 
+#define CHECK_NULL_ASSERT (DISABLE)
+
+#if !(CHECK_NULL_ASSERT)
+  #undef ASSERT
+  #define ASSERT(expr)
+#else
+  #include <assert.h>
+#endif
+
 // clang-format off
 
 #define __CBUFF_TYPE(type, buff, size)  \
   type buff ## cbuff[size];             \
   cbuff_t buff = {                      \
     .vBuff = buff ## cbuff,             \
-    .u8_eSize = sizeof(type),           \
-    .b_isFull = false,                  \
-    .u16_lgth = size,                   \
-    .u16_head = 0U,                     \
-    .u16_tail = 0U,                     \
+    .u16_eSize = sizeof(type),          \
+    .u16_lgth  = size,                  \
+    .u16_head  = 0U,                    \
+    .u16_tail  = 0U,                    \
   };
 
 #define _CBUFF_DEF_TYPE(type, buff, size)  \
