@@ -111,7 +111,7 @@
  * Returns (int):
  *   0..N - Number of slots available.
  */
-#define CBUFF_FREE_SPACES(buff) (buff.u16_lgth - cbuff_size(&buff))
+#define CBUFF_SPACES(buff) (buff.u16_lgth - cbuff_size(&buff))
 
 typedef cbuff_t *cbuff_handle_t;
 
@@ -149,7 +149,7 @@ base_t cbuff_push(cbuff_handle_t cb, void *const element, bool_t const forced);
  * \param    cb - circular buffer handle to retrieve the
  * \param    element from its tail buffer (oldest data), if
  * \param    rd_only a read will be performed but the data will be retained in the buffer
- * \return   OK if successful, NOT_OK otherwise.
+ * \return   OK if successful, NOT_OK otherwise. BUSY_W if full and not forced
  * \todo
  */
 base_t cbuff_pop(cbuff_handle_t cb, void *element, bool_t const rd_only);
