@@ -165,8 +165,7 @@ int main(void) {
   uTEST_START();
   uTEST_ADD_MSG(steering_test_interpolation, "Steering Problem testing values within the table and saturated",
                 64);
-  uTEST_ADD_MSG(steering_test_interpolation_with_errors,
-                "Steering Problem testing error handling", 129);
+  uTEST_ADD_MSG(steering_test_interpolation_with_errors, "Steering Problem testing error handling", 129);
 
   return (uTEST_END());
 }
