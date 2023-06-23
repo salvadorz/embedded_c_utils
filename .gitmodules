@@ -1,0 +1,3 @@
+[submodule "uTest"]
+	path = uTest
+	url = git@github.com:salvadorz/u-test.git
