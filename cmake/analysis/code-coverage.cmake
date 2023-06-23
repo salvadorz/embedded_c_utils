@@ -360,3 +360,11 @@ function(append_coverage_compiler_flags_to_target name)
 endfunction()
 
 ### MODIFY FROM HERE ###
+
+### Adding the target
+SETUP_TARGET_FOR_COVERAGE_LCOV(NAME    coverage 
+                            EXECUTABLE   ctest
+                            DEPENDENCIES uTest #ctest if you want
+                            #BASE_DIRECTORY "../" #If you want the report out of BIN_DIR
+                            EXCLUDE      "${PROJECT_SOURCE_DIR}/src/app/*" "${PROJECT_SOURCE_DIR}/src/lib/queue/*"
+                            NO_DEMANGLE)

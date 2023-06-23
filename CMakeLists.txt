@@ -18,7 +18,7 @@ endif()
 
 ### Build Options ###
 option(ENABLE_FORMAT  "Enable format analysis with clang-format" ON)
-option(ENABLE_COVERAGE  "Enable code coverage report and HTML  " ON)
+option(ENABLE_COVERAGE  "Enable code coverage report and HTML  " OFF)
 # Automated Code Coverage using GCOV, LCOV and GENHTML
 
 ### General Configuration ###
@@ -63,6 +63,11 @@ endif()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/lib/)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/uTest/lib/)
+
+# Create an output dir in CMAKE_BINARY_DIR
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 
 ### Project Source Tree ###
 add_subdirectory("src")

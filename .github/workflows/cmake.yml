@@ -1,0 +1,89 @@
+#******************************************************************************
+#*Copyright (C) 2023 by Salvador Z                                            *
+#*                                                                            *
+#*****************************************************************************/
+#*
+#*@author Salvador Z
+#*@brief GitHub workflow to configure an automated process to run one or more jobs
+#*
+# Template for all jobs
+name: Embedded_C_Utils-CI
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches:
+      - develop
+    types:
+      - closed
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_DTYPE: Debug
+  BUILD_RTYPE: Release
+
+jobs:
+    configure:
+      # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+      # You can convert this to a matrix build if you need cross-platform coverage.
+      # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+        runs-on: self-hosted
+        steps:
+          - uses: actions/checkout@v3
+
+          - name: Checkout submodules
+            run : git submodule update --init --recursive
+
+          - name: Configure CMake project
+            # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+            # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+            run: cmake . -Bbuild -DCMAKE_BUILD_TYPE=${{env.BUILD_RTYPE}}
+
+          - name: Build src and libs
+            run: make -j$(nproc --all) all
+            working-directory: ${{github.workspace}}/build
+
+    analysis:
+        runs-on: self-hosted
+        needs: configure
+        steps:
+          - uses: actions/checkout@v3
+
+          - name: Checkout submodules
+            run : git submodule update --init --recursive
+
+          - name: Configure CMake project
+            # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+            run: |
+              cmake . -Bbuild -DCMAKE_BUILD_TYPE=${{env.BUILD_RTYPE}}
+              chmod u+x scripts/clang_format.sh
+
+          - name: clang-format check
+            run: make format-clang
+            working-directory: ${{github.workspace}}/build
+
+          - name: Running test
+            run: |
+              make -j$(nproc --all) all
+              ctest -vv
+            working-directory: ${{github.workspace}}/build
+
+    coverage:
+        runs-on: self-hosted
+        needs: configure
+        steps:
+          - uses: actions/checkout@v3
+
+          - name: Checkout submodules
+            run : git submodule update --init --recursive
+
+          - name: Configure CMake project
+            # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+            run: cmake . -Bbuild -DENABLE_COVERAGE=ON -DCMAKE_BUILD_TYPE=${{env.BUILD_DTYPE}}
+
+          - name: Code coverage Report
+            run: |
+              make -j$(nproc --all) all
+              make coverage
+            working-directory: ${{github.workspace}}/build
