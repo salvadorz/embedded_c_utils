@@ -4,7 +4,14 @@
 #*****************************************************************************/
 #*
 #*@author Salvador Z
-#*@brief CMakeLists file to subscribe lib (test) directories
+#*@brief CMakeLists file to add all test cases for current lib
 #*
-add_subdirectory(cbuff) # Circular/ring buffer test
-add_subdirectory(interpolation) # Interpolate a linear function estimation test
+add_executable(test_interpolate test_interpolate.c)
+target_link_libraries(test_interpolate uTest interpolate)
+
+### Test Cases ###
+add_test(NAME test_interpolate_lib COMMAND test_interpolate)
+
+
+install(TARGETS test_interpolate
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/test)
