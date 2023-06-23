@@ -133,6 +133,10 @@ typedef uint8_t base_t;
   #define _UNUSED(x) ((void)(x))
 #endif
 
+#ifndef DEREFERENCE_TO
+  #define DEREFERENCE_TO(type) (*(type *))
+#endif
+
 #ifndef ASSERT
   #define ASSERT(expr) assert(expr)
 #endif
