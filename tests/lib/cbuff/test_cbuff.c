@@ -56,6 +56,31 @@ void fn_test_cbuff_iterations(void) {
   } /*end_for*/
 }
 
+void fn_test_cbuff_using_init(void) {
+  my_struct_t obj = { 0 };
+  my_struct_t cb_buffer[BUFFER_SIZE];
+  cbuff_t cb_buffer_struct = { 0 };
+  TEST_ASSERT_EQUAL_VAL_MSG(OK, cbuff_init(&cb_buffer_struct, cb_buffer, BUFFER_SIZE, sizeof(my_struct_t)), "Init failed");
+
+  for (int i = 0; i < BUFFER_SIZE; ++i) {
+    ++obj.data;
+    TEST_ASSERT_EQUAL_VAL(OK, cbuff_push(&cb_buffer_struct, &obj, false));
+    TEST_ASSERT_EQUAL_VAL((BUFFER_SIZE - 1) - i, CBUFF_SPACES(cb_buffer_struct));
+  }
+  // The Buffer should be full
+  TEST_ASSERT_EQUAL_VAL(BUSY_W, cbuff_push(&cb_buffer_struct, &obj, false));
+  TEST_ASSERT_EQUAL_VAL(0, CBUFF_SPACES(cb_buffer_struct));
+
+  for (int i = 0; i < BUFFER_SIZE; ++i) {
+    TEST_ASSERT_EQUAL_VAL(OK, cbuff_pop(&cb_buffer_struct, &obj, false));
+    TEST_ASSERT_EQUAL_VAL(i + 1, obj.data);
+  }
+
+  // The Buffer should be empty
+  TEST_ASSERT_EQUAL_VAL(NOT_OK, cbuff_pop(&cb_buffer_struct, &obj, false));
+  TEST_ASSERT_EQUAL_VAL(BUFFER_SIZE, CBUFF_SPACES(cb_buffer_struct));
+}
+
 void fn_test_cbuff_overwrite(void) {
   my_struct_t obj = { 0 };
   for (int i = 1; i <= BUFFER_SIZE * 2; ++i) {
@@ -73,6 +98,7 @@ int main() {
   // uTEST_START();
   uTEST_ADD_MSG(fn_test_my_cbuff, "Circular Buffer test simple", 15);
   uTEST_ADD_MSG(fn_test_cbuff_iterations, "Circular Buffers test iterations");
-  uTEST_ADD_MSG(fn_test_cbuff_overwrite, "Circular Buffers test with push forced", 59);
+  uTEST_ADD_MSG(fn_test_cbuff_using_init, "Circular Buffers test using init and no macros", 59);
+  uTEST_ADD_MSG(fn_test_cbuff_overwrite, "Circular Buffers test with push forced", 84);
   return (uTEST_END());
 }
