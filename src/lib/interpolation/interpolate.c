@@ -41,8 +41,10 @@ float32_t interpolated_estimate(float32_t const input, float32_t const *domain, 
                                 int32_t length) {
   float32_t f32_range_est = 0.0f;
 
-  if ((NULL == domain) || (NULL == range) || (1 > length))
+  if ((NULL == domain) || (NULL == range) || (1 > length)) {
+    // ASSERT(domain && range && (1 < length));
     return 0.0f; // exit(1)?
+  }
   else {
     if (input <= domain[0U]) // Saturate case
       f32_range_est = range[0U];
