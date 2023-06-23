@@ -18,6 +18,9 @@ endif()
 
 ### Build Options ###
 option(ENABLE_FORMAT  "Enable format analysis with clang-format" ON)
+option(ENABLE_COVERAGE  "Enable code coverage report and HTML  " ON)
+# Automated Code Coverage using GCOV, LCOV and GENHTML
+
 ### General Configuration ###
 
 set_property(GLOBAL PROPERTY C_STANDARD   11)
@@ -37,15 +40,22 @@ set(CMAKE_C_FLAGS "-Wall -Wextra ")
 set(CMAKE_C_FLAGS_DEBUG "-g -O0")
 set(CMAKE_C_FLAGS_RELEASE "-O3")
 
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 ### Enabling CMAKE Modules
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 ##########################
 # Enable Static Analysis #
 ##########################
-#include(analysis/code-coverage)
 if(ENABLE_FORMAT)
-include(analysis/clang-format)
+  include(analysis/clang-format)
+endif()
+if(ENABLE_COVERAGE)
+  include(analysis/code-coverage)
+  APPEND_COVERAGE_COMPILER_FLAGS()
 endif()
 
 ### General Project Structure ###
