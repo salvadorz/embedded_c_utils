@@ -4,9 +4,8 @@
 #*****************************************************************************/
 #*
 #*@author Salvador Z
-#*@brief CMakeLists file to add subscribe lib directories
+#*@brief CMakeLists file to create linked list target for library
 #*
-add_subdirectory(cbuff) # Circular/ring buffer
-add_subdirectory(interpolation) # Interpolate a linear function estimation
-add_subdirectory(llist) # Linked list
-add_subdirectory(queue) # Queue class a FIFO class structure in CPP
+add_library(llist STATIC llist.c)
+target_include_directories(llist PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(llist)
