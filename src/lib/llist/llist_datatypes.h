@@ -17,12 +17,13 @@ extern "C" {
 #include "utils_common.h"
 
 typedef struct ll_node_s ll_node_t;
+
 typedef ll_node_t *ll_handle_t;
 typedef ll_node_t *ll_node_ptr_t;
 
 struct ll_node_s {
   ll_node_t *next;
-  void *data; // Any data type
+  void      *data; // Any data type
 };
 
 #ifdef __cplusplus

@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (C) 2023 by Salvador Z                                            *
  *                                                                             *
- * This file is part of C-Utils                                                *
+ * This file is part of UTILS_C                                                *
  *                                                                             *
  *   Permission is hereby granted, free of charge, to any person obtaining a   *
  *   copy of this software and associated documentation files (the Software)   *
