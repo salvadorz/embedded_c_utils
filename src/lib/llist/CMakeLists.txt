@@ -4,8 +4,8 @@
 #*****************************************************************************/
 #*
 #*@author Salvador Z
-#*@brief CMakeLists file to subscribe lib (test) directories
+#*@brief CMakeLists file to create linked list target for library
 #*
-add_subdirectory(cbuff) # Circular/ring buffer test
-add_subdirectory(interpolation) # Interpolate a linear function estimation test
-add_subdirectory(llist) # Linked list test
+add_library(llist STATIC llist.c)
+target_include_directories(llist PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(llist)
