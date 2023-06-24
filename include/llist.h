@@ -39,6 +39,56 @@ extern "C" {
 
 // Includes
 #include "llist_datatypes.h"
+#include "llist_defines.h"
+
+/**
+ * Description:
+ *   Defines globally a handle for the linked list of a given type.
+ *    The type can be native data types or user-defined data types.
+ *
+ * Usage:
+ *   LLIST_TYPE_CREATE(uint8_t, u8_list_head);
+ *   LLIST_TYPE_CREATE(struct foo, list_foo_head);
+ *   LLIST_PUSH_FRONT(u8_data, u8_list_head);
+ *   uint8_t u8_data = LLIST_POP_DATA(u8_list_head);
+ */
+#define LLIST_TYPE_CREATE(type, handle) _LLIST_DEF_TYPE(type, handle)
+
+/**
+ * Description:
+ *   Removes the node at the head of the linked list and returns the data
+ */
+#define LLIST_POP_DATA(list) llist_pop_head_data_##list((&list))
+
+/**
+ * Description:
+ *   Removes the node at the head of the linked list and provides the data in/out reference
+ *
+ * Returns (base_t):
+ *   0 - Success
+ *   1 - Error
+ */
+#define LLIST_POP_REF(list, ref) llist_pop_head_refd_##list((&list), ref)
+
+/**
+ * Description:
+ *   Inserts the value holded by `val` at the back of the linked list.
+ *
+ * Returns (base_t):
+ *   0 - Success
+ *   1 - Error
+ */
+#define LLIST_PUSH_BACK(val, list) llist_push_tail(&list, llist_create_node(&val, sizeof(val)))
+
+/**
+ * Description:
+ *   Inserts the value holded by `val` at the head of the linked list.
+ *
+ * Returns (base_t):
+ *   0 - Success
+ *   1 - Error
+ */
+#define LLIST_PUSH_FRONT(val, list) llist_push_head(&list, llist_create_node(&val, sizeof(val)))
 
 /**
  * \brief    Creates a node for the linked list and fills it with the data provided
