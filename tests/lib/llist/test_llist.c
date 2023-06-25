@@ -91,6 +91,10 @@ void test_llist_tail_no_macros() {
 
   for (uint32_t i = 0; i < MAX_LLIST_LEN; ++i) {
     my_struct_t *ret = (my_struct_t *)llist_pop_head_data(&head);
+    if (NULL == ret) {
+      llist_delete_list(&head);
+      TEST_ASSERT_FAIL("ERROR: pop_head_data shall not return NULL");
+    }
     TEST_ASSERT_EQUAL_VAL_MSG(MAX_LLIST_LEN - i, ret->data, "Failed to pop head");
     free(ret);
     TEST_ASSERT_EQUAL_VAL_MSG((MAX_LLIST_LEN - 1) - i, llist_get_size(head),
@@ -126,6 +130,7 @@ void test_llist_with_macros() {
   }
   TEST_ASSERT_EQUAL_VAL_MSG(0, llist_get_size(my_struct_list), "llist shall be empty");
   TEST_ASSERT_EQUAL_MSG(NULL, llist_pop_head_data(&my_struct_list), "llist is empty, shall return NULL");
+  TEST_ASSERT_EQUAL_MSG(NOT_OK, LLIST_POP_REF(my_struct_list, &obj), "llist is empty, shall return NOT_OK");
 
   // Now fill the list again, but this time with push tail
   for (uint32_t i = 0; i < MAX_LLIST_LEN; ++i) {
@@ -150,11 +155,30 @@ void test_llist_with_macros() {
   }
 }
 
+void test_llist_errors_and_delete() {
+  my_struct_t obj  = { 0 };
+  ll_handle_t head = NULL;
+
+  for (uint32_t i = 0; i < MAX_LLIST_LEN; ++i) {
+    obj.data = i + 1;
+    TEST_ASSERT_EQUAL_VAL_MSG(OK, llist_push_head(&head, llist_create_node(&obj, sizeof(my_struct_t))),
+                              "Failed to push head");
+  }
+  llist_delete_list(&head);
+
+  TEST_ASSERT_EQUAL_VAL_MSG(0, llist_get_size(head), "llist must be empty");
+  TEST_ASSERT_EQUAL_VAL_MSG(NOT_OK, llist_push_head(&head, NULL), "Need to fail as node is NULL");
+  TEST_ASSERT_EQUAL_VAL_MSG(NOT_OK, llist_push_tail(&head, NULL), "Need to fail as node is NULL");
+  TEST_ASSERT_EQUAL_VAL_MSG(NOT_OK, llist_reversal(&head), "Reversing empty list shall fail");
+
+}
+
 int main() {
   uTEST_INIT("test_llist.c");
   uTEST_ADD_MSG(test_llist_no_macros, "Linked list test with no macros");
   uTEST_ADD_MSG(test_llist_tail_no_macros, "Linked list test with no macros pushed to tail");
   uTEST_ADD_MSG(test_llist_with_macros,
                 "List test with macros, no need to freed memory or declare the handle");
+  uTEST_ADD_MSG(test_llist_errors_and_delete, "Linked list testing errors and delete");
   return (uTEST_END());
 }

@@ -91,6 +91,8 @@ void fn_test_cbuff_overwrite(void) {
     TEST_ASSERT_EQUAL_VAL(OK, CBUFF_POP(my_cb, &obj));
     TEST_ASSERT_EQUAL_VAL((BUFFER_SIZE + i), obj.data);
   }
+  // Testing error
+  TEST_ASSERT_EQUAL_VAL(NOT_OK, CBUFF_PUT(my_cb, NULL));
 }
 
 int main() {
