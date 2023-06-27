@@ -52,7 +52,7 @@ float32_t interpolated_estimate(float32_t const input, float32_t const *domain, 
       f32_range_est = range[length - 1];
 
     else {
-      /* Range from 1 to len-1 (Only len-1 iter) The range[len-1] is validate on
+      /* Range from 1 to len-1 (Only len-1 iter) The range[len-1] is validated on
        * previous `else if` (saturate) case */
       for (int32_t i = 1; i < length; ++i) {
 

@@ -170,7 +170,6 @@ void test_llist_errors_and_delete() {
   TEST_ASSERT_EQUAL_VAL_MSG(NOT_OK, llist_push_head(&head, NULL), "Need to fail as node is NULL");
   TEST_ASSERT_EQUAL_VAL_MSG(NOT_OK, llist_push_tail(&head, NULL), "Need to fail as node is NULL");
   TEST_ASSERT_EQUAL_VAL_MSG(NOT_OK, llist_reversal(&head), "Reversing empty list shall fail");
-
 }
 
 int main() {
