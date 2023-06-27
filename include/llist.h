@@ -154,12 +154,12 @@ base_t llist_reversal(ll_handle_t *head);
 uint32_t llist_get_size(ll_handle_t head);
 
 /**
- * \brief    Calls the function provided to print the data in the list, when the list ends
+ * \brief    Calls the function provided to perform an action on the data in the list, when the list ends
  *           or is empty it provides NULL to the function as notification.
  * \param    head - reference to the head of the list
  * \param    vfn_ptr - pointer to the function that prints the data
  */
-void llist_print(ll_handle_t const head, void (*vfn_ptr)(void *));
+void llist_traverse(ll_handle_t const head, void (*vfn_ptr)(void *));
 
 #ifdef __cplusplus
 }

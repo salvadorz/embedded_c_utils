@@ -60,7 +60,7 @@ void test_llist_no_macros() {
   }
   TEST_ASSERT_EQUAL_VAL_MSG(MAX_LLIST_LEN, llist_get_size(head),
                             "llist shall be holding MAX_LLIST_LEN (10) elements");
-  llist_print(head, print_my_struct);
+  llist_traverse(head, print_my_struct);
   TEST_ASSERT_EQUAL_VAL_MSG(OK, llist_reversal(&head), "Failed to reverse list");
 
   for (uint32_t i = 0; i < MAX_LLIST_LEN; ++i) {
@@ -86,7 +86,7 @@ void test_llist_tail_no_macros() {
   }
   TEST_ASSERT_EQUAL_VAL_MSG(MAX_LLIST_LEN, llist_get_size(head),
                             "llist shall be holding MAX_LLIST_LEN (10) elements");
-  llist_print(head, print_my_struct);
+  llist_traverse(head, print_my_struct);
   TEST_ASSERT_EQUAL_VAL_MSG(OK, llist_reversal(&head), "Failed to reverse list");
 
   for (uint32_t i = 0; i < MAX_LLIST_LEN; ++i) {
@@ -117,7 +117,7 @@ void test_llist_with_macros() {
   }
   TEST_ASSERT_EQUAL_VAL_MSG(MAX_LLIST_LEN, llist_get_size(my_struct_list),
                             "llist shall be holding MAX_LLIST_LEN (10) elements");
-  llist_print(my_struct_list, print_my_struct);
+  llist_traverse(my_struct_list, print_my_struct);
   TEST_ASSERT_EQUAL_VAL_MSG(OK, llist_reversal(&my_struct_list), "Failed to reverse list");
 
   /** Now using POP_REF DATA */
@@ -144,7 +144,7 @@ void test_llist_with_macros() {
   TEST_ASSERT_EQUAL_VAL_MSG(OK, llist_reversal(&my_struct_list), "Failed to reverse list");
   TEST_ASSERT_EQUAL_VAL_MSG(MAX_LLIST_LEN, llist_get_size(my_struct_list),
                             "llist shall be holding MAX_LLIST_LEN (10) elements");
-  llist_print(my_struct_list, print_my_struct);
+  llist_traverse(my_struct_list, print_my_struct);
 
   /** Now using POP_DATA */
   for (uint32_t i = 0; i < MAX_LLIST_LEN; ++i) {

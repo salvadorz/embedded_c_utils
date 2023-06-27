@@ -179,7 +179,7 @@ uint32_t llist_get_size(ll_handle_t head) {
   return size;
 }
 
-void llist_print(ll_handle_t const head, void (*vfn_ptr)(void *)) {
+void llist_traverse(ll_handle_t const head, void (*vfn_ptr)(void *)) {
   ll_node_ptr_t node_ref = head;
 
   while (NULL != node_ref) {
