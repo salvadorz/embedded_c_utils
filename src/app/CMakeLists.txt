@@ -4,7 +4,7 @@
 #*****************************************************************************/
 #*
 #*@author Salvador Z
-#*@brief CMakeLists file to add project structure to source and libs
+#*@brief CMakeLists file to add folder app structure
 #*
-add_subdirectory(app)
-add_subdirectory(lib)
+add_subdirectory(control)
+add_subdirectory(state_machines)

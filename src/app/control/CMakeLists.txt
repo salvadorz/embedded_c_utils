@@ -4,7 +4,10 @@
 #*****************************************************************************/
 #*
 #*@author Salvador Z
-#*@brief CMakeLists file to add project structure to source and libs
+#*@brief CMakeLists file to add executables targets
 #*
-add_subdirectory(app)
-add_subdirectory(lib)
+add_executable(pid pid.c)
+target_link_libraries(pid -lglut -lGLU -lGL)
+
+add_executable(plot plot.c shader_utils.c)
+target_link_libraries(plot -lm -lglut -lGLEW -lGLU -lGL)
