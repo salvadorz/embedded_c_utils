@@ -31,6 +31,7 @@
 
 #include "llist.h"
 #include <stdlib.h> /*malloc, free*/
+#include <string.h> /*mcpy*/
 
 static base_t llist_allocate_node(ll_node_ptr_t *new_node) {
   base_t ret_val = OK;
@@ -64,6 +65,98 @@ ll_node_ptr_t llist_create_node(void *data, uint32_t data_size) {
   }
 
   return new_node;
+}
+/*
+void test(int m) {
+  struct my_node {
+    int complex_data;
+    sl_node_t node;
+  };
+
+  sl_list_t my_head = { NULL };
+
+  //sl_insert_back(&my_head, )
+
+}
+base_t sl_insert_front(sl_list_t *list, sl_node_t *node) {
+  base_t ret_val = OK;
+
+  if (NULL != node) {
+    node->next = list->head;
+    list->head = node;
+  } else {
+    ret_val = NOT_OK;
+  }
+
+
+  return ret_val;
+}
+
+base_t sl_insert_back(sl_list_t *list, sl_node_t *node) {
+  base_t ret_val = OK;
+
+  if (NULL != node) {
+    if (NULL == list->head) {
+      list->head = node;
+    } else {
+      sl_node_t *current = list->head;
+      // find the tail
+      while (NULL != current->next) {
+        current = current->next;
+      }
+      current->next = node;
+    }
+  } else {
+    ret_val = NOT_OK;
+  }
+
+  return ret_val;
+}
+
+base_t sl_insert_at(sl_list_t *list, sl_node_t *at, sl_node_t *node) {
+  base_t ret_val = OK;
+
+  sl_node_t *prev = at ? at : list->head;
+  if ((NULL != node) && (NULL == prev)) {
+    list->head = node;
+  }
+
+  else if ((NULL != node) && (NULL != at)) {
+    node->next = at->next;
+    at->next   = node;
+  } else {
+    ret_val = NOT_OK;
+  }
+
+  return ret_val;
+}
+*/
+//base_t sl_list_insert(sl_list_t **singly_linked_list, int node_data){
+base_t sl_list_insert(sl_list_t** singly_linked_list, void *node_data, uint32_t data_size) {
+  base_t ret_val = OK;
+  ll_node_t *new_node = NULL;
+
+  if ((NULL != singly_linked_list) && (OK == llist_allocate_node(&new_node))) {
+    new_node->data = malloc(sizeof(data_size));
+    if( new_node->data != NULL ) {
+      memcpy(new_node->data, &node_data, data_size);
+      new_node->next = NULL;
+    } else {
+      free(new_node);
+      new_node = NULL; // Avoid dangling pointer
+      return NOT_OK;
+    }
+  }
+  
+  if (!(*singly_linked_list)->head) {
+      (*singly_linked_list)->head = new_node;
+  } else {
+      (*singly_linked_list)->tail->next = new_node;
+  }
+
+  (*singly_linked_list)->tail = new_node;
+
+  return ret_val;
 }
 
 base_t llist_push_head(ll_handle_t *head, ll_node_ptr_t node) {

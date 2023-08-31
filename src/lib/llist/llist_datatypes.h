@@ -26,6 +26,23 @@ struct ll_node_s {
   void      *data; // Any data type
 };
 
+typedef struct sl_list {
+    ll_handle_t head;
+    ll_handle_t tail;
+} sl_list_t;
+/*
+typedef struct sl_node_s sl_node_t;
+typedef struct sl_list_s sl_list_t;
+
+struct sl_node_s {
+  sl_node_t *next;
+};
+
+struct sl_list_s {
+  sl_node_t *head;
+};
+*/
+
 #ifdef __cplusplus
 }
 #endif

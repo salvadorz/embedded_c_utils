@@ -140,4 +140,7 @@ typedef uint8_t base_t;
 #ifndef ASSERT
   #define ASSERT(expr) assert(expr)
 #endif
+
+#define STACK_ALLOC(type, elements) \
+  (type[elements]) {}
 #endif /* UTILS_COMMON_H_ */

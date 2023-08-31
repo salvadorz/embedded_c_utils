@@ -161,6 +161,16 @@ uint32_t llist_get_size(ll_handle_t head);
  */
 void llist_traverse(ll_handle_t const head, void (*vfn_ptr)(void *));
 
+/**
+ * @brief Appends an element to the list, It updates the Head and tail of the list
+ * 
+ * @param singly_linked_list 
+ * @param node_data 
+ * @return base_t 
+ */
+base_t sl_list_insert(sl_list_t **singly_linked_list, void *node_data, uint32_t data_size);
+// base_t sl_list_insert(sl_list_t **singly_linked_list, int node_data);
+
 #ifdef __cplusplus
 }
 #endif
